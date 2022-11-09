@@ -1,12 +1,4 @@
-Consegna:
-// Dato un array di oggetti letterali con:
-//  - url dell’immagine
-//  - titolo
-//  - descrizione
-// Creare un carosello come nella foto allegata.
-// Milestone 0:
-// Come nel primo carosello realizzato, focalizziamoci prima sulla creazione del markup statico: costruiamo il container e inseriamo l'immagine grande
-// in modo da poter stilare lo slider.
+
 // Milestone 1:
 // Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
 // Al click dell'utente sulle frecce verso l'alto o il basso, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
@@ -27,21 +19,68 @@ const images = [
         image: 'img/01.webp',
         title: 'Marvel\'s Spiderman Miles Morale',
         text: 'Experience the rise of Miles Morales as the new hero masters incredible, explosive new powers to become his own Spider-Man.',
-    }, {
+    }, 
+    {
         image: 'img/02.webp',
         title: 'Ratchet & Clank: Rift Apart',
         text: 'Go dimension-hopping with Ratchet and Clank as they take on an evil emperor from another reality.',
-    }, {
+    }, 
+    {
         image: 'img/03.webp',
         title: 'Fortnite',
         text: "Grab all of your friends and drop into Epic Games Fortnite, a massive 100 - player face - off that combines looting, crafting, shootouts and chaos.",
-    }, {
+    }, 
+    {
         image: 'img/04.webp',
         title: 'Stray',
         text: 'Lost, injured and alone, a stray cat must untangle an ancient mystery to escape a long-forgotten city',
-    }, {
+    },
+    {
         image: 'img/05.webp',
         title: "Marvel's Avengers",
         text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
     }
 ];
+
+
+const currentImage = document.querySelector('.carousel-left');
+const carouselRight = document.querySelector('.carousel-right');
+
+const chevronUp = '<i class="fa-solid fa-chevron-up"></i>';
+const chevronDown = '<i class="fa-solid fa-chevron-down"></i>';
+
+//creo elemento prev
+const prev = document.createElement('div');
+prev.classList.add('prev');
+carouselRight.append(prev);
+document.querySelector('.prev').innerHTML = chevronUp;
+
+//creo elemento next
+const next = document.createElement('div');
+next.classList.add('next');
+carouselRight.append(next);
+document.querySelector('.next').innerHTML = chevronDown;
+
+images.forEach((element) => {
+    //aggiungo immagini a sinistra ciclicamente
+    const imageLeft = document.createElement('img');
+    imageLeft.classList.add('hide');
+    imageLeft.src = (`${element.image}`);
+    imageLeft.alt = (`${element.title}`);
+    currentImage.append(imageLeft);
+    //aggiungo immagini a destra ciclicamente
+    const imageRight = document.createElement('img');
+    imageRight.classList.add('opacity-filter');
+    imageRight.src = (`${element.image}`);
+    imageRight.alt = (`${element.title}`);
+    carouselRight.append(imageRight);
+    //aggiungo click event prev
+    prev.addEventListener('click', function(){
+
+    });
+    //aggiungo click event next
+    next.addEventListener('click', function(){
+
+    });
+
+});
