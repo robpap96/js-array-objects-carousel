@@ -4,7 +4,7 @@
 // Al click dell'utente sulle frecce verso l'alto o il basso, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
 // Milestone 2:
 // Aggiungere il **ciclo infinito** del carosello. Ovvero se la miniatura attiva è la prima e l'utente clicca la freccia verso l'alto, 
-//la miniatura che deve attivarsi sarà l'ultima e viceversa per l'ultima miniatura se l'utente clicca la freccia verso il basso.
+// la miniatura che deve attivarsi sarà l'ultima e viceversa per l'ultima miniatura se l'utente clicca la freccia verso il basso.
 // BONUS 1:
 // Aggiungere le thumbnails (sottoforma di miniatura) ed al click attivare l’immagine corrispondente.
 // BONUS 2:
@@ -61,26 +61,117 @@ next.classList.add('next');
 carouselRight.append(next);
 document.querySelector('.next').innerHTML = chevronDown;
 
-images.forEach((element) => {
+images.forEach((element, index) => {
+    // const previousElement = element[index-1];
+    // const nextElement = element[index+1];
+    // const currentElement = element[index];
     //aggiungo immagini a sinistra ciclicamente
     const imageLeft = document.createElement('img');
-    imageLeft.classList.add('hide');
+    const description = document.createElement('div'); 
+
     imageLeft.src = (`${element.image}`);
     imageLeft.alt = (`${element.title}`);
+    if(index === 0) {
+        imageLeft.classList.add("active");
+    }else{
+        imageLeft.classList.add("hide");
+    }
+    imageLeft.id = "0" + index;
+
+    if(index === 0) {
+        description.classList.add("active");
+    }else{
+        description.classList.add("hide");
+    }
+    description.id ="T" + index;
+    description.classList.add('position-absolute');
+    description.innerHTML = (`
+       <h2> ${element.title} </h2>
+        ${element.text}`);
     currentImage.append(imageLeft);
+    currentImage.append(description);
     //aggiungo immagini a destra ciclicamente
     const imageRight = document.createElement('img');
     imageRight.classList.add('opacity-filter');
+    imageRight.id = index;
     imageRight.src = (`${element.image}`);
     imageRight.alt = (`${element.title}`);
     carouselRight.append(imageRight);
-    //aggiungo click event prev
-    prev.addEventListener('click', function(){
 
-    });
-    //aggiungo click event next
-    next.addEventListener('click', function(){
+    if(index === 0){
+       imageRight.classList.remove('opacity-filter'); 
+    }
 
-    });
+    
+});
+//aggiungo click event next
+let i = 0;
 
+next.addEventListener('click', function(){
+    let j = i + 1;
+    if(i === 4){
+        j = 0;
+    }
+    const currentItem = document.getElementById(i);
+    const nextItem = document.getElementById(j);
+
+    const currentImage = document.getElementById(`0${i}`);
+    const nextImage = document.getElementById(`0${j}`);
+
+    const currentText = document.getElementById(`T${i}`);
+    const nextText = document.getElementById(`T${j}`);
+
+    currentItem.classList.add('opacity-filter');
+    nextItem.classList.remove('opacity-filter');
+
+    currentImage.classList.remove('active');
+    currentImage.classList.add('hide');
+    nextImage.classList.remove('hide');
+    nextImage.classList.add('active');
+
+    currentText.classList.remove('active');
+    currentText.classList.add('hide');
+    nextText.classList.remove('hide');
+    nextText.classList.add('active');
+
+    i++;
+    if(j === 0) {
+        i = 0;
+    }
+        
+});
+//aggiungo click event prev
+prev.addEventListener('click', function(){
+
+    let j = i - 1;    
+    if(i === 0){
+        j = 4;
+    }
+    const currentItem = document.getElementById(i);
+    const prevItem = document.getElementById(j);
+
+    const currentImage = document.getElementById(`0${i}`);
+    const prevImage = document.getElementById(`0${j}`);
+
+    const currentText = document.getElementById(`T${i}`);
+    const nextText = document.getElementById(`T${j}`);
+
+    currentItem.classList.add('opacity-filter');
+    prevItem.classList.remove('opacity-filter');
+
+    currentImage.classList.remove('active');
+    currentImage.classList.add('hide');
+    prevImage.classList.remove('hide');
+    prevImage.classList.add('active');
+
+    currentText.classList.remove('active');
+    currentText.classList.add('hide');
+    nextText.classList.remove('hide');
+    nextText.classList.add('active');
+
+    i--;
+    if(j === 4) {
+        i = 4;
+    }
+    
 });
